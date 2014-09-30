@@ -1,6 +1,6 @@
-$(document).on('ready', function() {
+// $(document).on('ready', function() {
   
-});
+
 
 var FoodItem = function(name, calories, vegan, glutenFree, citrusFree) {
 	this.name = name || 'Not named';
@@ -17,24 +17,6 @@ FoodItem.prototype.toString = function(){
 	return this.name + ' has ' + this.calories + ' calories.' + ' ' + veganResult + ' ' + glutenResult + ' ' + citrusResult;	
 };
 
-var lettuce = new FoodItem('lettuce', 0, true, true, true);
-var frenchToast = new FoodItem('french toast', 1000, false, false, true);
-var orange = new FoodItem('orange', 25, true, true, false);
-var patron = new FoodItem('tequila', 100, true, true, true);
-var dogMeat = new FoodItem('chijuaja', 500, false, true, true);
-var avocado = new FoodItem('aguacate', 200, true, true, true);
-var salt = new FoodItem('sal', 0, true, true, true);
-var cayenne = new FoodItem('cayenne peppa', 0, true, true, true);
-var tortillaChips = new FoodItem('totopos de maiz', 250, false, false, true);
-var beans = new FoodItem('porotos', 350, true, false, true);
-var rice = new FoodItem('arroz', 271, true, false, true);
-var mixer = new FoodItem('mezcla', 150, true, true, false);
-
-
-// console.log(lettuce.toString());
-// console.log(frenchToast.toString());
-// console.log(orange.toString());
-
 var Drink = function(name, description, price, ingredients) {
 	this.name = name;
 	this.description = description;
@@ -42,17 +24,12 @@ var Drink = function(name, description, price, ingredients) {
 	this.ingredients = ingredients;
 };
 
-var margarita = new Drink('Margarita', 'Alcoholic Beverage', 10, [patron, mixer, salt]);
-
 var Plate = function(name, description, price, ingredients) {
 	this.name = name;
 	this.description = description;
 	this.price = price;
 	this.ingredients = ingredients;
 };
-
-var burrito = new Plate('Burrito', 'Mexican Food', 3, [frenchToast, lettuce, cayenne, beans, rice]);
-var guacamole = new Plate('guacamole', 'Mexican Food Dip', 1, [avocado, salt, cayenne]);
 
 var Order = function(plates) {
 	this.plates = plates;
@@ -71,6 +48,22 @@ var Restaurant = function(name, description, menu) {
 var Customer = function(dietaryPreference) {
 	this.dietaryPreference = dietaryPreference;
 };
+
+var lettuce = new FoodItem('lettuce', 0, true, true, true);
+var frenchToast = new FoodItem('french toast', 1000, false, false, true);
+var orange = new FoodItem('orange', 25, true, true, false);
+var patron = new FoodItem('tequila', 100, true, true, true);
+var dogMeat = new FoodItem('chijuaja', 500, false, true, true);
+var avocado = new FoodItem('aguacate', 200, true, true, true);
+var salt = new FoodItem('sal', 0, true, true, true);
+var cayenne = new FoodItem('cayenne peppa', 0, true, true, true);
+var tortillaChips = new FoodItem('totopos de maiz', 250, false, false, true);
+var beans = new FoodItem('porotos', 350, true, false, true);
+var rice = new FoodItem('arroz', 271, true, false, true);
+var mixer = new FoodItem('mezcla', 150, true, true, false);
+var margarita = new Drink('Margarita', 'Alcoholic Beverage', 10, [patron, mixer, salt]);
+var burrito = new Plate('Burrito', 'Mexican Food', 3, [frenchToast, lettuce, cayenne, beans, rice]);
+var guacamole = new Plate('guacamole', 'Mexican Food Dip', 1, [avocado, salt, cayenne]);
 
 /////////////////////////////////////////////////////
 
@@ -122,9 +115,35 @@ var newMenu = new Menu([burrito, guacamole, margarita]);
 
 var muyBuenaRestaurante = new Restaurant('Muy Buena Restaurante', 'The Best Restaurant in the Barrio', newMenu);
 
+/////////////////////////////////////////////////////
+
+FoodItem.prototype.create = function() {
+	if (this.element) return this.element;
+	this.element = $('<li>' + this.name + '</li>');
+	return this.element;
+};
 
 
 
+Drink.prototype.create = function() {
+	if (this.element) return this.element;
+	console.log(this);
+	$('body').append('<div><h3>' + this.name + '</h3><ul></ul></div>');
+	
+		for (var i = 0; i < this.ingredients.length; i++) {
+		var fuckinfoodItem = this.ingredients[i].create();
+		$('ul').append(fuckinfoodItem);
+	};
+	return this.element;
+};
+
+
+
+
+
+
+
+// });
 
 
 
