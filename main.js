@@ -1,6 +1,3 @@
-// $(document).on('ready', function() {
-  
-
 
 var FoodItem = function(name, calories, vegan, glutenFree, citrusFree) {
 	this.name = name || 'Not named';
@@ -17,19 +14,28 @@ FoodItem.prototype.toString = function(){
 	return this.name + ' has ' + this.calories + ' calories.' + ' ' + veganResult + ' ' + glutenResult + ' ' + citrusResult;	
 };
 
-var Drink = function(name, description, price, ingredients) {
+var Edibles = function(name, description, price, ingredients){
 	this.name = name;
 	this.description = description;
 	this.price = price;
 	this.ingredients = ingredients;
 };
 
-var Plate = function(name, description, price, ingredients) {
-	this.name = name;
-	this.description = description;
-	this.price = price;
-	this.ingredients = ingredients;
+//same as Edibles
+//	(name, description, price, ingredients)
+var Drink = function() {
+	Edibles.apply(this, arguments);
 };
+
+Drink.prototype = new Edibles();
+Drink.prototype.constructor = Drink;
+
+var Plate = function() {
+	Edibles.apply(this, arguments);
+};
+
+Plate.prototype =  new Edibles();
+Plate.prototype.constructor = Plate;
 
 var Order = function(plates) {
 	this.plates = plates;
@@ -125,25 +131,44 @@ FoodItem.prototype.create = function() {
 
 
 
-Drink.prototype.create = function() {
-	if (this.element) return this.element;
-	console.log(this);
-	$('body').append('<div><h3>' + this.name + '</h3><ul></ul></div>');
+// Drink.prototype.create = function() {
+// 	if (this.element) return this.element;
+// 	// console.log(this);
+// 	// 
+// 	this.element = $('<div>');
+// 	this.element
+// 		.append('<h3>' + this.name + '</h3>')
+// 		.append('<ul>');
+// 	// $('.bebida-container').append('<div><h3>' + this.name + '</h3><ul></ul></div>');
 	
+// 		for (var i = 0; i < this.ingredients.length; i++) {
+// 		var fuckinfoodItem = this.ingredients[i].create();
+// 		this.element.find('ul').append(fuckinfoodItem);
+// 	};
+// 	return this.element;
+// };
+
+Edibles.prototype.create = function() {
+	if (this.element) return this.element;
+
+	this.element = $('<div>');
+	this.element
+		.append('<h3>' + this.name + '</h3>')
+		.append('<ul>');
+	// $('.plato-container').append('<div><h3>' + this.name + '</h3><ul></ul></div>');
+
 		for (var i = 0; i < this.ingredients.length; i++) {
 		var fuckinfoodItem = this.ingredients[i].create();
-		$('ul').append(fuckinfoodItem);
-	};
+		this.element.find('ul').append(fuckinfoodItem);
+		};
 	return this.element;
 };
 
 
 
+$(document).on('ready', function() {
 
-
-
-
-// });
+});
 
 
 
