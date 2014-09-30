@@ -164,19 +164,32 @@ Edibles.prototype.create = function() {
 	return this.element;
 };
 
+Menu.prototype.create = function() {
+	if (this.element) return this.element;
+
+	this.element = $('.contenador-del-menu');
+	this.element
+		.append('<h3>' + this.name + '</h3>')
+		.append('<ul>');
+	// $('.plato-container').append('<div><h3>' + this.name + '</h3><ul></ul></div>');
+
+		for (var i = 0; i < this.plates.length; i++) {
+		var plateItem = this.Edibles[i].create();
+		console.log();
+		this.element.find('ul').append(plateItem);
+		};
+	return this.element;
+}
+
+//TypeError: Cannot read property '0' of undefinedmessage: "Cannot read property '0' of undefined"stack: (...)get stack: function () { [native code] }set stack: function () { [native code] }__proto__: Errorconstructor: function TypeError() { [native code] }arguments: nullcaller: nulllength: 1name: "TypeError"prototype: Errorconstructor: function TypeError() { [native code] }arguments: nullcaller: nulllength: 1name: "TypeError"prototype: Error__proto__: function Empty() {}<function scope>name: "TypeError"stack: undefined__proto__: d__proto__: function Empty() {}<function scope>name: "TypeError"stack: undefined__proto__: d
 
 
 $(document).on('ready', function() {
 
+$('.plato-container').append(margarita.create())
+$('.plato-container').append(burrito.create())
+
 });
-
-
-
-
-
-
-
-
 
 
 
